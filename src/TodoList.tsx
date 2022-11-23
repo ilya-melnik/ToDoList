@@ -37,6 +37,7 @@ const TodoList = (props: TasksForToDoList) => {
                 <button onClick={()=> {props.changeFilter('active')}}>Active</button>
                 <button onClick={()=> {props.changeFilter('completed')}}>Completed</button>
             </div>
+            <div></div>
         </div>
 
     );
