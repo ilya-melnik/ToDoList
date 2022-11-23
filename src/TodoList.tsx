@@ -8,7 +8,6 @@ type TasksForToDoList = {
     changeFilter: (filter:FilterValueType) => void
 }
 
-//dfasdfds
 const TodoList = (props: TasksForToDoList) => {
     const tasksList = props.tasks.length
         ? <ul>{
