@@ -1,12 +1,12 @@
-import React, {ChangeEvent,KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValueType, TasksType} from "./App";
 
 type TasksForToDoList = {
     title: string
     tasks: Array<TasksType>
-    removeTask: (taskID: string)=> void
-    changeFilter: (filter:FilterValueType) => void
-    addTask:(title:string) =>void
+    removeTask: (taskID: string) => void
+    changeFilter: (filter: FilterValueType) => void
+    addTask: (title: string) => void
 }
 
 
@@ -17,30 +17,28 @@ const TodoList = (props: TasksForToDoList) => {
                 return <li key={task.id}>
                     <input type="checkbox" checked={task.isDone}/>
                     <span>{task.title}</span>
-                    <button onClick={()=>props.removeTask(task.id)}>x</button>
-                    </li>
+                    <button onClick={() => props.removeTask(task.id)}>x</button>
+                </li>
 
             })
         }</ul>
         : <span>Your list is empty </span>
 
-    let [title, setTitle]=useState('')
-    const SetLocalTitle = (e:ChangeEvent<HTMLInputElement>) =>{
+    let [title, setTitle] = useState('')
+    const SetLocalTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
 
     }
-    const addTitle=()=>{
+    const addTitle = () => {
         props.addTask(title)
         setTitle('')
     }
-const onEnterAddTask = (e:KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter'){
+    const onEnterAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
             addTitle()
         }
-}
-const changeFilterButtonCreator =(filter: FilterValueType)=>{
-    props.changeFilter(filter)
-}
+    }
+    const changeFilterButtonCreator = (filter: FilterValueType) => () => props.changeFilter(filter)
 
     return (
         <div>
@@ -51,12 +49,21 @@ const changeFilterButtonCreator =(filter: FilterValueType)=>{
 
             </div>
 
-                {tasksList}
+            {tasksList}
 
             <div>
-                <button onClick={()=> {changeFilterButtonCreator('all')}}>All</button>
-                <button onClick={()=> {changeFilterButtonCreator('active')}}>Active</button>
-                <button onClick={()=> {changeFilterButtonCreator('completed')}}>Completed</button>
+                <button onClick={() => {
+                    changeFilterButtonCreator('all')
+                }}>All
+                </button>
+                <button onClick={() => {
+                    changeFilterButtonCreator('active')
+                }}>Active
+                </button>
+                <button onClick={() => {
+                    changeFilterButtonCreator('completed')
+                }}>Completed
+                </button>
             </div>
             <div></div>
         </div>

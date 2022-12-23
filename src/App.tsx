@@ -48,13 +48,13 @@ function App() {
 
 
     }
-    getFilteredTask(filter, tasks)
+    const filteredTask = getFilteredTask(filter, tasks)
 
     return (
         <div className="App">
 
 
-            <TodoList tasks={tasks}
+            <TodoList tasks={filteredTask}
                       title={todoListTitle}
                       removeTask={removeTask}
                       changeFilter={changeFilter}
