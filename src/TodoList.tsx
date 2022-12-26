@@ -12,6 +12,7 @@ type TasksForToDoList = {
 
 const TodoList = (props: TasksForToDoList) => {
     const tasksList = props.tasks.length
+
         ? <ul>{
             props.tasks.map((task: TasksType) => {
                 return <li key={task.id}>
@@ -38,7 +39,7 @@ const TodoList = (props: TasksForToDoList) => {
             addTitle()
         }
     }
-    const changeFilterButtonCreator = (filter: FilterValueType) => () => props.changeFilter(filter)
+    const changeFilterButtonCreator = (filter: FilterValueType) => props.changeFilter(filter)
 
     return (
         <div>

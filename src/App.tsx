@@ -53,7 +53,6 @@ function App() {
     return (
         <div className="App">
 
-
             <TodoList tasks={filteredTask}
                       title={todoListTitle}
                       removeTask={removeTask}
