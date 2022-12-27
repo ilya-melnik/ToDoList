@@ -11,7 +11,6 @@ type TasksForToDoList = {
     filter: FilterValueType
 }
 
-
 const TodoList = (props: TasksForToDoList) => {
 
     let [title, setTitle] = useState('')
@@ -25,7 +24,7 @@ const TodoList = (props: TasksForToDoList) => {
 
                 return <li key={task.id} className={task.isDone ? 'task-done' : ''}>
                     <input type="checkbox" checked={task.isDone} onChange={changeTaskStatus}/>
-                    <span >{task.title}</span>
+                    <span>{task.title}</span>
                     <button onClick={removeTask}>x</button>
                 </li>
 
@@ -62,7 +61,7 @@ const TodoList = (props: TasksForToDoList) => {
                 <input value={title} onKeyDown={onEnterAddTask} onChange={SetLocalTitle}
                        className={error ? 'input-error' : ''}/>
                 <button onClick={addTitle}>+</button>
-                {error ? <div style={{fontWeight: 'bold', color: 'red'}}>Please, enter task title</div>:''}
+                {error ? <div style={{fontWeight: 'bold', color: 'red'}}>Please, enter task title</div> : ''}
 
             </div>
 

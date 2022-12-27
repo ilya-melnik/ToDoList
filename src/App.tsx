@@ -47,8 +47,8 @@ function App() {
     }
     const filteredTask = getFilteredTask(filter, tasks)
 
-    const changeTaskStatus = (taskID: string, isDone:boolean) => {
-        setTasks(tasks.map(t=> t.id === taskID?{...t, isDone: isDone}:t))
+    const changeTaskStatus = (taskID: string, isDone: boolean) => {
+        setTasks(tasks.map(t => t.id === taskID ? {...t, isDone: isDone} : t))
     }
     return (
         <div className="App">
