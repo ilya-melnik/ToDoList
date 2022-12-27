@@ -7,32 +7,46 @@ type TasksForToDoList = {
     removeTask: (taskID: string) => void
     changeFilter: (filter: FilterValueType) => void
     addTask: (title: string) => void
+    changeTaskStatus: (taskID: string, isDone: boolean) => void
+    filter: FilterValueType
 }
 
 
 const TodoList = (props: TasksForToDoList) => {
-    const tasksList = props.tasks.length
 
+    let [title, setTitle] = useState('')
+    let [error, setError] = useState<boolean>(false)
+
+    const tasksList = props.tasks.length
         ? <ul>{
             props.tasks.map((task: TasksType) => {
-                return <li key={task.id}>
-                    <input type="checkbox" checked={task.isDone}/>
-                    <span>{task.title}</span>
-                    <button onClick={() => props.removeTask(task.id)}>x</button>
+                const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked)
+                const removeTask = () => props.removeTask(task.id)
+
+                return <li key={task.id} className={task.isDone ? 'task-done' : ''}>
+                    <input type="checkbox" checked={task.isDone} onChange={changeTaskStatus}/>
+                    <span >{task.title}</span>
+                    <button onClick={removeTask}>x</button>
                 </li>
 
             })
         }</ul>
         : <span>Your list is empty </span>
 
-    let [title, setTitle] = useState('')
     const SetLocalTitle = (e: ChangeEvent<HTMLInputElement>) => {
+        error && setError(false)
         setTitle(e.currentTarget.value)
-
     }
+
     const addTitle = () => {
-        props.addTask(title)
+        const trimmedTask = title.trim()
+        if (trimmedTask) {
+            props.addTask(title)
+        } else {
+            setError(true)
+        }
         setTitle('')
+
     }
     const onEnterAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
@@ -45,25 +59,29 @@ const TodoList = (props: TasksForToDoList) => {
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input value={title} onKeyDown={onEnterAddTask} onChange={SetLocalTitle}/>
+                <input value={title} onKeyDown={onEnterAddTask} onChange={SetLocalTitle}
+                       className={error ? 'input-error' : ''}/>
                 <button onClick={addTitle}>+</button>
+                {error ? <div style={{fontWeight: 'bold', color: 'red'}}>Please, enter task title</div>:''}
 
             </div>
 
             {tasksList}
 
             <div>
-                <button onClick={() => {
+                <button className={props.filter === 'all' ? 'btn-active' : ''} onClick={() => {
                     changeFilterButtonCreator('all')
                 }}>All
                 </button>
-                <button onClick={() => {
-                    changeFilterButtonCreator('active')
-                }}>Active
+                <button className={props.filter === 'active' ? 'btn-active' : ''}
+                        onClick={() => {
+                            changeFilterButtonCreator('active')
+                        }}>Active
                 </button>
-                <button onClick={() => {
-                    changeFilterButtonCreator('completed')
-                }}>Completed
+                <button className={props.filter === 'completed' ? 'btn-active' : ''}
+                        onClick={() => {
+                            changeFilterButtonCreator('completed')
+                        }}>Completed
                 </button>
             </div>
             <div></div>

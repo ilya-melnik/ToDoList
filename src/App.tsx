@@ -35,7 +35,6 @@ function App() {
         SetFilter(valueFilter)
     }
 
-
     const getFilteredTask = (filter: FilterValueType, tasks: Array<TasksType>) => {
         switch (filter) {
             case "completed":
@@ -45,19 +44,23 @@ function App() {
             default:
                 return tasks
         }
-
-
     }
     const filteredTask = getFilteredTask(filter, tasks)
 
+    const changeTaskStatus = (taskID: string, isDone:boolean) => {
+        setTasks(tasks.map(t=> t.id === taskID?{...t, isDone: isDone}:t))
+    }
     return (
         <div className="App">
 
-            <TodoList tasks={filteredTask}
+            <TodoList filter={filter}
+                      tasks={filteredTask}
                       title={todoListTitle}
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
+                      changeTaskStatus={changeTaskStatus}
+
             />
 
         </div>
