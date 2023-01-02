@@ -35,7 +35,7 @@ function App() {
         SetFilter(valueFilter)
     }
 
-    const getFilteredTask = (filter: FilterValueType, tasks: Array<TasksType>) => {
+    const getFilteredTask = (filter: FilterValueType, tasks: TasksType[]) => {
         switch (filter) {
             case "completed":
                 return tasks = tasks.filter(t => t.isDone)
