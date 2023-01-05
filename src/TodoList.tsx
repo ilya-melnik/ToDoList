@@ -2,12 +2,15 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValueType, TasksType} from "./App";
 
 type TasksForToDoList = {
+    todoListId: string
+    removeTodoList: (todoListID: string) => void
+
     title: string
     tasks: Array<TasksType>
-    removeTask: (taskID: string) => void
-    changeFilter: (filter: FilterValueType) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (taskID: string, isDone: boolean) => void
+    removeTask: (taskID: string, todoListId: string) => void
+    changeTodoListFilter: (filter: FilterValueType, todoListId: string) => void
+    addTask: (title: string, todoListId: string) => void
+    changeTaskStatus: (taskID: string, isDone: boolean, todoListId: string) => void
     filter: FilterValueType
 }
 
@@ -19,8 +22,8 @@ const TodoList = (props: TasksForToDoList) => {
     const tasksList = props.tasks.length
         ? <ul>{
             props.tasks.map((task: TasksType) => {
-                const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked)
-                const removeTask = () => props.removeTask(task.id)
+                const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked, props.todoListId)
+                const removeTask = () => props.removeTask(task.id, props.todoListId)
 
                 return <li key={task.id} className={task.isDone ? 'task-done' : ''}>
                     <input type="checkbox" checked={task.isDone} onChange={changeTaskStatus}/>
@@ -40,7 +43,7 @@ const TodoList = (props: TasksForToDoList) => {
     const addTitle = () => {
         const trimmedTask = title.trim()
         if (trimmedTask) {
-            props.addTask(title)
+            props.addTask(title, props.todoListId)
         } else {
             setError(true)
         }
@@ -52,11 +55,14 @@ const TodoList = (props: TasksForToDoList) => {
             addTitle()
         }
     }
-    const changeFilterButtonCreator = (filter: FilterValueType) => props.changeFilter(filter)
-
+    const changeFilterButtonCreator = (filter: FilterValueType) => props.changeTodoListFilter(filter, props.todoListId)
+    const removeTodoList = () => props.removeTodoList(props.todoListId)
     return (
         <div>
-            <h3>{props.title}</h3>
+            <h3>
+                {props.title}
+                <button onClick={removeTodoList}>x</button>
+            </h3>
             <div>
                 <input value={title} onKeyDown={onEnterAddTask} onChange={SetLocalTitle}
                        className={error ? 'input-error' : ''}/>
@@ -66,6 +72,8 @@ const TodoList = (props: TasksForToDoList) => {
             </div>
 
             {tasksList}
+
+
 
             <div>
                 <button className={props.filter === 'all' ? 'btn-active' : ''} onClick={() => {
