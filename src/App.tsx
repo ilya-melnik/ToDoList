@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import './App.css';
 import TodoList from "./TodoList";
 import {v1} from "uuid";
+import AddItemForm from "./AddItemForm";
+import todoList from "./TodoList";
 
 export type TasksType = {
     id: string
@@ -77,6 +79,9 @@ function App() {
 
         setTasks({...tasks, [todoListId]: tasks[todoListId].map(t => t.id === taskID ? {...t, isDone: isDone} : t)})
     }
+    const changeTaskTitle = (taskID: string, title:string, todoListId: string) => {
+             setTasks({...tasks, [todoListId]: tasks[todoListId].map(t => t.id === taskID ? {...t, title} : t)})
+    }
     const changeTodoListFilter = (nextFilterValue: FilterValueType, todoListID: string) => {
         setTodoLists(todoLists.map(tl => tl.id === todoListID ? {...tl, filter: nextFilterValue} : tl))
     }
@@ -94,8 +99,21 @@ function App() {
                 return tasks
         }
     }
+    const addTodoList = (title: string) => {
+        const newTodo: TodoListType = {
+            id: v1(),
+            title,
+            filter: 'all',
+        }
+        setTodoLists([...todoLists,newTodo ])
+        setTasks({...tasks, [newTodo.id]:[]})
+    }
 
-    const todoListsComponents = todoLists.map((tl)  => {
+    const changeTodoListTitle = (title:string, todoListId: string) => {
+        setTodoLists(todoLists.map(tl =>tl.id === todoListId ? {...tl, title}:tl))
+    }
+
+    const todoListsComponents = todoLists.map((tl) => {
         const filteredTask = getFilteredTasks(tl.filter, tasks[tl.id])
         return (
             <TodoList
@@ -107,12 +125,15 @@ function App() {
                 removeTask={removeTask}
                 changeTaskStatus={changeTaskStatus}
                 changeTodoListFilter={changeTodoListFilter}
+                changeTaskTitle={changeTaskTitle}
+                changeTodoListTitle={changeTodoListTitle}
             />)
     })
 
 
     return (
         <div className="App">
+            <AddItemForm titleMaxLength={10} addItem={addTodoList} />
             {todoListsComponents}
         </div>
     );
