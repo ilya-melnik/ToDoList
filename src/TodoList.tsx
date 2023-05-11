@@ -2,6 +2,8 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValueType, TasksType} from "./App";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
+import {Button} from "@mui/material";
+
 
 type TasksForToDoList = {
     todoListId: string
@@ -36,6 +38,7 @@ const TodoList = (props: TasksForToDoList) => {
                 return <li key={task.id} className={task.isDone ? 'task-done' : ''}>
                     <input type="checkbox" checked={task.isDone} onChange={changeTaskStatus}/>
                     <EditableSpan title={task.title} classes={taskClasses} changeTitle={changeTaskTitle}  />
+
 
 
                     <button onClick={removeTask}>x</button>
