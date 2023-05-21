@@ -1,28 +1,28 @@
-.App {
-    padding: 30px;
-    display: flex;
-}
+/*.App {*/
+/*    padding: 30px;*/
+/*    display: flex;*/
+/*}*/
 
-.App > div {
-    margin-right: 50px;
-}
+/*.App > div {*/
+/*    margin-right: 50px;*/
+/*}*/
 
-.btn-active {
-    background-color: darkslateblue;
-}
+/*.btn-active {*/
+/*    background-color: darkslateblue;*/
+/*}*/
 
-.task-done {
-    color: gray;
-    opacity: 0.8;
-}
+/*.task-done {*/
+/*    color: gray;*/
+/*    opacity: 0.8;*/
+/*}*/
 
-.input-error {
-    border: 2px solid red;
-    outline: none;
-}
+/*.input-error {*/
+/*    border: 2px solid red;*/
+/*    outline: none;*/
+/*}*/
 
-.add-form{
-    border: 2px solid black;
- padding: 15px;
-    max-height: 2rem;
-}
+/*.add-form{*/
+/*    !*border: 2px solid black;*!*/
+/* padding: 15px;*/
+/*    max-height: 2rem;*/
+/*}*/

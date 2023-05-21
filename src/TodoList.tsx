@@ -2,7 +2,11 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValueType, TasksType} from "./App";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
-import {Button} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+
 
 
 type TasksForToDoList = {
@@ -36,12 +40,14 @@ const TodoList = (props: TasksForToDoList) => {
                 const taskClasses = task.isDone ? 'task-done': 'task'
 
                 return <li key={task.id} className={task.isDone ? 'task-done' : ''}>
-                    <input type="checkbox" checked={task.isDone} onChange={changeTaskStatus}/>
+
+                    <Checkbox   checked={task.isDone} onChange={changeTaskStatus} />
+
                     <EditableSpan title={task.title} classes={taskClasses} changeTitle={changeTaskTitle}  />
 
-
-
-                    <button onClick={removeTask}>x</button>
+                    <IconButton aria-label="delete" onClick={removeTask}>
+                        <DeleteIcon  />
+                    </IconButton>
                 </li>
 
             })
@@ -56,7 +62,10 @@ const TodoList = (props: TasksForToDoList) => {
         <div>
             <h2>
                 <EditableSpan title={props.title} changeTitle={changeTodoListTitle}  />
-                <button onClick={removeTodoList}>x</button>
+
+                <IconButton aria-label="delete" onClick={removeTodoList}>
+                    <DeleteIcon  />
+                </IconButton>
             </h2>
             <AddItemForm titleMaxLength={25} addItem={addTask} />
 
@@ -64,20 +73,18 @@ const TodoList = (props: TasksForToDoList) => {
 
 
             <div>
-                <button className={props.filter === 'all' ? 'btn-active' : ''} onClick={() => {
+                <Button variant={props.filter === 'all' ? 'outlined' : "contained"} color="success" onClick={() => {
                     changeFilterButtonCreator('all')
-                }}>All
-                </button>
-                <button className={props.filter === 'active' ? 'btn-active' : ''}
-                        onClick={() => {
-                            changeFilterButtonCreator('active')
-                        }}>Active
-                </button>
-                <button className={props.filter === 'completed' ? 'btn-active' : ''}
-                        onClick={() => {
-                            changeFilterButtonCreator('completed')
-                        }}>Completed
-                </button>
+                }}>All</Button>
+
+                <Button variant={props.filter === 'active' ? 'outlined' : "contained"} color="secondary" onClick={() => {
+                    changeFilterButtonCreator('active')
+                }}>Active</Button>
+                <Button variant={props.filter === 'completed' ? 'outlined' : "contained"} color="error" onClick={() => {
+                    changeFilterButtonCreator('completed')
+                }}>completed</Button>
+
+
             </div>
             <div></div>
         </div>
